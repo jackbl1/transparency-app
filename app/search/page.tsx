@@ -23,7 +23,11 @@ const iconMap = {
   MicIcon,
 };
 
-export default function SearchPage() {
+function SearchContent({
+  fakeProducts,
+}: {
+  fakeProducts: typeof import("@/lib/constants").fakeProducts;
+}) {
   const searchParams = useSearchParams();
   const query = searchParams.get("q")?.trim() || "";
   const filtered = query
@@ -71,5 +75,15 @@ export default function SearchPage() {
         </ul>
       )}
     </div>
+  );
+}
+
+export default function SearchPage() {
+  return (
+    <React.Suspense
+      fallback={<div className="max-w-2xl mx-auto p-6">Loading search...</div>}
+    >
+      <SearchContent fakeProducts={fakeProducts} />
+    </React.Suspense>
   );
 }
