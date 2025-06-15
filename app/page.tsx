@@ -1,51 +1,46 @@
-import { DeployButton } from "@/components/deploy-button";
-import { EnvVarWarning } from "@/components/env-var-warning";
-import { AuthButton } from "@/components/auth-button";
+"use client";
 import { Hero } from "@/components/hero";
-import { ThemeSwitcher } from "@/components/theme-switcher";
-import { ConnectSupabaseSteps } from "@/components/tutorial/connect-supabase-steps";
-import { SignUpUserSteps } from "@/components/tutorial/sign-up-user-steps";
-import { hasEnvVars } from "@/lib/utils";
-import Link from "next/link";
+import { SearchBar } from "@/components/search-bar";
 
 export default function Home() {
   return (
-    <main className="min-h-screen flex flex-col items-center">
-      <div className="flex-1 w-full flex flex-col gap-20 items-center">
-        <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
-          <div className="w-full max-w-5xl flex justify-between items-center p-3 px-5 text-sm">
-            <div className="flex gap-5 items-center font-semibold">
-              <Link href={"/"}>Next.js Supabase Starter</Link>
-              <div className="flex items-center gap-2">
-                <DeployButton />
-              </div>
-            </div>
-            {!hasEnvVars ? <EnvVarWarning /> : <AuthButton />}
-          </div>
-        </nav>
-        <div className="flex-1 flex flex-col gap-20 max-w-5xl p-5">
-          <Hero />
-          <main className="flex-1 flex flex-col gap-6 px-4">
-            <h2 className="font-medium text-xl mb-4">Next steps</h2>
-            {hasEnvVars ? <SignUpUserSteps /> : <ConnectSupabaseSteps />}
-          </main>
-        </div>
-
-        <footer className="w-full flex items-center justify-center border-t mx-auto text-center text-xs gap-8 py-16">
-          <p>
-            Powered by{" "}
-            <a
-              href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
-              target="_blank"
-              className="font-bold hover:underline"
-              rel="noreferrer"
-            >
-              Supabase
-            </a>
-          </p>
-          <ThemeSwitcher />
-        </footer>
+    <main className="relative min-h-[calc(100vh-156px)] flex flex-col items-center px-4 py-12 overflow-hidden bg-gradient-to-br from-yellow-50 via-white to-blue-50">
+      {/* Decorative background shapes */}
+      <div className="pointer-events-none absolute inset-0 -z-10 flex justify-center items-center">
+        <div className="w-[600px] h-[600px] bg-yellow-100 rounded-full blur-3xl opacity-50 absolute -top-40 -left-40" />
+        <div className="w-[400px] h-[400px] bg-blue-100 rounded-full blur-2xl opacity-40 absolute -bottom-32 -right-32" />
       </div>
+      {/* Hero Section */}
+      <section className="w-full max-w-3xl text-center mb-10">
+        <Hero />
+      </section>
+      {/* Search Bar Section */}
+      <section className="w-full max-w-xl flex">
+        <div className="w-full bg-white/80 backdrop-blur-lg rounded-3xl shadow-2xl p-10 flex flex-col items-center border border-yellow-200 animate-fade-in">
+          <h2 className="text-3xl font-extrabold text-gray-900 mb-6 tracking-tight drop-shadow-md">
+            Search for a Product
+          </h2>
+          <p className="text-lg text-gray-600 mb-6 max-w-md text-center">
+            Look up any product. Powered by Transparency Duck.
+          </p>
+          <SearchBar />
+        </div>
+      </section>
+      <style jsx global>{`
+        @keyframes fade-in {
+          0% {
+            opacity: 0;
+            transform: translateY(40px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .animate-fade-in {
+          animation: fade-in 1s cubic-bezier(0.4, 0, 0.2, 1) both;
+        }
+      `}</style>
     </main>
   );
 }
